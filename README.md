@@ -20,6 +20,158 @@ Integrating these separately takes **weeks**. GenTech Agent Kit bakes them toget
 
 ---
 
+## Architecture
+
+```
+genTech-agent-kit/
+│
+├── core/                        # Always installed
+│   ├── brain/                   # Context management
+│   │   └── proactive-context/   # Handoff notes, Mess Hall, memory
+│   ├── vault/                   # Structure
+│   │   ├── Green Room/          # Ideas
+│   │   ├── Mess Hall/           # Thinking space
+│   │   └── Archive/             # History
+│   └── automation/              # Cron jobs
+│       └── context-snapshot.json
+│
+├── modules/                     # Pick and choose
+│   ├── dashboard/               # Presentation layer
+│   │   ├── dashboard-engine.js  # 38KB, zero deps
+│   │   └── examples/
+│   ├── defi/                    # LP tracking, yield scouting
+│   ├── payments/                # x402, Circle
+│   ├── identity/                # ERC-8004, wallet binding
+│   ├── audit/                   # Transaction logging
+│   └── protocols/               # Travala, WURK, COTI
+│
+├── chains/                      # Chain-specific
+│   ├── avalanche/
+│   ├── ethereum/
+│   ├── base/
+│   └── solana/
+│
+└── docs/
+    ├── memory-rules.md
+    └── integrations.md
+```
+
+---
+
+## Quick Start
+
+### Option 1: Full Stack (Recommended)
+```bash
+git clone https://github.com/ProtoJay4789/genTech-agent-kit.git
+cd genTech-agent-kit
+./install.sh --all
+```
+
+### Option 2: Pick and Choose
+```bash
+# Core only (brain + vault + automation)
+./install.sh --core
+
+# Add DeFi module
+./install.sh --module defi
+
+# Add Avalanche chain
+./install.sh --chain avalanche
+```
+
+### Option 3: Manual
+```bash
+# Copy core to your Hermes profile
+cp -r core/brain/* ~/.hermes/profiles/your-profile/skills/
+cp -r core/vault/* ~/your-vault/
+
+# Copy modules you want
+cp -r modules/dashboard/* ~/your-dashboard/
+cp -r modules/defi/* ~/your-defi/
+```
+
+---
+
+## Modules
+
+### 🧠 Brain Layer (Core)
+**Always installed.** The foundation of context management.
+
+- Proactive context saving
+- Mess Hall scratchpad
+- Handoff notes
+- Memory bar (80-100%)
+- Session start protocol
+
+### 📊 Dashboard Module
+**Presentation layer.** 38KB, zero dependencies.
+
+- 8 section types (stats, table, progress, checklist, grid, cards, timeline, custom)
+- 7 field formats (money, percent, badge, date, number, tags, text)
+- 5 themes (Default, Avalanche, Ethereum, Solana, Fire)
+- Auto-refresh with live data
+- Mobile-first responsive
+
+### 💰 DeFi Module
+**Portfolio intelligence.** Track positions, scout yields, climb milestones.
+
+- LP position tracking
+- Yield scout fleet
+- Fee milestone progression
+- Live price feeds (DexScreener)
+- Range status monitoring
+
+### 🔐 Identity Module
+**Who is this agent?** Wallet binding, user verification.
+
+- ERC-8004 trustless agents
+- Wallet binding (EVM, Solana, Base)
+- Persona isolation
+- Multi-chain identity resolution
+
+### ⚡ Enforcement Module
+**Make it happen.** Payments, execution, automation.
+
+- x402 micropayments (Circle)
+- Auto-execution engine
+- Multi-sig support
+- Protocol integration
+
+### 📋 Audit Module
+**Prove it.** Transaction logging, compliance.
+
+- Transaction logging with receipts
+- Proof of execution on-chain
+- Dashboard visualization
+- Automated compliance reporting
+
+### 🔗 Protocols Module
+**Connect to everything.** Pre-built integrations.
+
+- Travala (travel booking)
+- WURK.fun (microtasks)
+- COTI (privacy transactions)
+- More added regularly
+
+---
+
+## Chains
+
+| Chain | Status | Protocols |
+|-------|--------|-----------|
+| **Avalanche** | ✅ Live | LFJ, Pangolin, Benqi |
+| **Ethereum** | ✅ Live | Uniswap, Aave, Lido |
+| **Base** | ✅ Live | Uniswap, Aerodrome |
+| **Solana** | 🔄 Coming | Raydium, Orca, Jito |
+
+**Each chain gets the GenTech spin:**
+- Native protocol integrations
+- Optimized gas strategies
+- Chain-specific yield opportunities
+- Local compliance handling
+
+---
+
 ## The Three Pillars
 
 ### 🔐 Identity
@@ -48,185 +200,11 @@ Integrating these separately takes **weeks**. GenTech Agent Kit bakes them toget
 
 ---
 
-## What's Included
-
-### Brain Layer
-```yaml
-context_management: true
-mess_hall_scratchpad: true
-handoff_notes: true
-memory_bar: "80-100% only"
-cron_snapshots: "every 6 hours"
-```
-
-### DeFi Layer
-```yaml
-lp_tracking: true
-yield_scouting: true
-milestone_progression: true
-live_price_feeds: "DexScreener, Birdeye"
-supported_chains: [avalanche, ethereum, base, solana]
-```
-
-### Protocol Layer
-```yaml
-payments: "x402, Circle USDC"
-travel: "Travala integration"
-tasks: "WURK.fun microtasks"
-privacy: "COTI private transactions"
-```
-
-### Automation Layer
-```yaml
-context_snapshots: "every 6 hours"
-nightly_housekeeping: "11 PM ET"
-weekly_maintenance: "Monday 10 AM"
-health_monitoring: "every 6 hours"
-```
-
-### Presentation Layer
-```yaml
-dashboard_engine: "38KB, zero deps"
-section_types: 8
-field_formats: 7
-themes: 5
-mobile_first: true
-```
-
----
-
-## Quick Start
-
-### 1. Clone the Kit
-```bash
-git clone https://github.com/ProtoJay4789/genTech-agent-kit.git
-cd genTech-agent-kit
-```
-
-### 2. Copy to Your Hermes Profile
-```bash
-cp -r skills/* ~/.hermes/profiles/your-profile/skills/
-cp -r cron/* ~/.hermes/profiles/your-profile/cron/
-```
-
-### 3. Set Up Your Vault
-```bash
-cp -r vault-structure/* ~/your-vault/
-```
-
-### 4. Configure Your Agent
-```yaml
-# config.yaml
-agent:
-  name: "Your Agent"
-  identity:
-    wallet: "0x..."  # Your EVM wallet
-    chain: "avalanche"
-  enforcement:
-    auto_execute: true
-    threshold: 100  # USD
-  audit:
-    logging: true
-    dashboard: true
-```
-
-### 5. Deploy
-```bash
-hermes start
-```
-
-Your agent now has identity, enforcement, and audit baked in.
-
----
-
-## Agent Architecture
-
-```
-GenTech Agent
-│
-├── 🧠 Brain Layer
-│   ├── Proactive context saving
-│   ├── Mess Hall scratchpad
-│   ├── Handoff notes
-│   └── Memory bar (80-100%)
-│
-├── 📁 Vault Layer
-│   ├── Green Room (ideas)
-│   ├── Mess Hall (thinking)
-│   ├── Archive (history)
-│   └── INDEX.md (navigation)
-│
-├── 💰 Identity Layer
-│   ├── Wallet binding (EVM/Solana/Base)
-│   ├── User verification (ERC-8004)
-│   ├── Persona isolation
-│   └── Multi-chain resolution
-│
-├── ⚡ Enforcement Layer
-│   ├── x402 payments (Circle)
-│   ├── Auto-execution engine
-│   ├── Multi-sig support
-│   └── Protocol integration
-│
-├── 📋 Audit Layer
-│   ├── Transaction logging
-│   ├── Proof of execution
-│   ├── Dashboard visualization
-│   └── Compliance reporting
-│
-├── 🔍 DeFi Layer
-│   ├── LP position tracking
-│   ├── Yield scout fleet
-│   ├── Fee milestones
-│   └── Live price feeds
-│
-├── 🔗 Protocol Layer
-│   ├── x402 payments
-│   ├── WURK.fun tasks
-│   ├── Travala travel
-│   └── COTI privacy
-│
-├── 🤖 Automation Layer
-│   ├── Context snapshots (6h)
-│   ├── Nightly housekeeping
-│   ├── Weekly maintenance
-│   └── Health monitoring
-│
-└── 📊 Presentation Layer
-    ├── Dashboard Engine (38KB)
-    ├── Persona dashboards
-    ├── Scout visualization
-    └── Milestone progression
-```
-
----
-
-## Chain Support
-
-| Chain | Status | Protocols |
-|-------|--------|-----------|
-| **Avalanche** | ✅ Live | LFJ, Pangolin, Benqi |
-| **Ethereum** | ✅ Live | Uniswap, Aave, Lido |
-| **Base** | ✅ Live | Uniswap, Aerodrome |
-| **Solana** | 🔄 Coming | Raydium, Orca, Jito |
-| **BNB Chain** | 🔄 Coming | PancakeSwap, Venus |
-| **Arbitrum** | 🔄 Coming | Uniswap, GMX |
-
-**Each chain gets the GenTech spin:**
-- Native protocol integrations
-- Optimized gas strategies
-- Chain-specific yield opportunities
-- Local compliance handling
-
----
-
 ## Contributing
-
-We welcome contributions! Here's how:
 
 ### For Developers
 1. Fork the repo
-2. Add your integration
+2. Add your module or chain integration
 3. Submit a PR with tests
 4. Get merged, ship it
 
@@ -245,7 +223,7 @@ We welcome contributions! Here's how:
 ## Roadmap
 
 ### Q3 2026
-- [ ] Solana integration
+- [ ] Solana full integration
 - [ ] BNB Chain support
 - [ ] Multi-agent coordination
 - [ ] Advanced audit dashboard
