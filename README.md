@@ -97,11 +97,47 @@ cp -r modules/defi/* ~/your-defi/
 ### 🧠 Brain Layer (Core)
 **Always installed.** The foundation of context management.
 
-- Proactive context saving
-- Mess Hall scratchpad
-- Handoff notes
-- Memory bar (80-100%)
-- Session start protocol
+**⚠️ IMPORTANT: The brain is the most critical component.** Without it, your agent forgets everything between sessions. The vault is your agent's second brain — ideas, decisions, handoffs, context snapshots.
+
+**We recommend [Obsidian](https://obsidian.md/) for the vault.** It's free, local-first, and works perfectly with Hermes.
+
+**Install Obsidian CLI (ob) for constant sync:**
+```bash
+npm install -g obsidian-cli
+ob sync  # Syncs vault to Obsidian desktop/mobile
+```
+
+**Set up automatic sync:**
+```bash
+# Add to your cron jobs
+0 */6 * * * cd ~/vaults/your-vault && ob sync
+```
+
+This keeps your agent's brain synced across devices — desktop, mobile, anywhere you need it.
+
+**What's in the brain:**
+- **Green Room** (`09-Green Room/`) — Ideas and brainstorming
+- **Mess Hall** (`11-Mess Hall/`) — Thinking space, scratchpad, handoff notes
+- **Archive** (`Archive/`) — Historical content
+- **Daily** (`08-Daily/`) — Daily summaries
+
+**Why it matters:**
+- Handoff notes preserve context across sessions
+- Mess Hall captures ideas mid-conversation
+- Context snapshots auto-save every 6 hours
+- Your agent never loses important information
+
+**First time setup:**
+```bash
+# Create your vault
+mkdir -p ~/vaults/your-vault/{09-Green\ Room,11-Mess\ Hall,Archive,08-Daily}
+
+# Install Obsidian CLI
+npm install -g obsidian-cli
+
+# Initialize sync
+cd ~/vaults/your-vault && ob init
+```
 
 ### 📊 Dashboard Module
 **Presentation layer.** 38KB, zero dependencies.
