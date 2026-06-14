@@ -53,6 +53,7 @@ genTech-agent-kit/
 │
 └── docs/
     ├── memory-rules.md
+    ├── KNOWN_ISSUES.md      # 🔧 Troubleshooting — check here first when stuck
     └── integrations.md
 ```
 
@@ -237,6 +238,14 @@ cd ~/vaults/your-vault && ob init
 ---
 
 ## Contributing
+
+### 🐛 Found a Bug?
+Check **[KNOWN_ISSUES.md](docs/KNOWN_ISSUES.md)** first — we track every bug, gotcha, and workaround we find.
+
+If it's not listed:
+1. Open an issue with symptoms + steps to reproduce
+2. We'll add it to KNOWN_ISSUES.md with a fix
+3. Your report helps everyone who hits the same wall
 
 ### For Developers
 1. Fork the repo
