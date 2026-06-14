@@ -55,6 +55,7 @@ genTech-agent-kit/
     ├── memory-rules.md
     ├── KNOWN_ISSUES.md      # 🔧 Troubleshooting — check here first when stuck
     ├── DASHBOARD_TEMPLATES.md # 📊 Built-in patterns for common dashboard types
+    ├── DEFI_LP_MONITORING_PATTERN.md # 💰 Two-tier alerts + fee efficiency tracking
     └── integrations.md
 ```
 
