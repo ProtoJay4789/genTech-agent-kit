@@ -54,6 +54,7 @@ genTech-agent-kit/
 └── docs/
     ├── memory-rules.md
     ├── KNOWN_ISSUES.md      # 🔧 Troubleshooting — check here first when stuck
+    ├── DASHBOARD_TEMPLATES.md # 📊 Built-in patterns for common dashboard types
     └── integrations.md
 ```
 
