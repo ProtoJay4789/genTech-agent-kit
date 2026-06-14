@@ -77,6 +77,14 @@ install_core() {
     echo "  Automation templates ready in core/automation/"
     echo "    Import via Hermes cron: hermes cron import core/automation/context-snapshot.json"
     
+    # Obsidian sync recommendation
+    echo ""
+    echo -e "${YELLOW}  ⚠️ IMPORTANT: Set up Obsidian sync for your vault${NC}"
+    echo "    npm install -g obsidian-cli"
+    echo "    cd ~/vaults/your-vault && ob init"
+    echo "    Add to cron: 0 */6 * * * cd ~/vaults/your-vault && ob sync"
+    echo ""
+    
     echo -e "${GREEN}Core installed!${NC}"
 }
 
