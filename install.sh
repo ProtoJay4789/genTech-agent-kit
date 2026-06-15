@@ -61,18 +61,25 @@ install_core() {
         find "$HERMES_DIR" -maxdepth 1 -type d | while read profile; do
             if [ -d "$profile/skills" ]; then
                 cp -r "$KIT_DIR/core/brain/proactive-context" "$profile/skills/" 2>/dev/null || true
+                cp -r "$KIT_DIR/core/behavior/wake-up-protocol" "$profile/skills/" 2>/dev/null || true
                 echo "    Added to $(basename "$profile")"
             fi
         done
     else
         echo -e "${YELLOW}  Hermes profiles not found. Copy manually:${NC}"
         echo "    cp -r core/brain/proactive-context ~/.hermes/profiles/your-profile/skills/"
+        echo "    cp -r core/behavior/wake-up-protocol ~/.hermes/profiles/your-profile/skills/"
     fi
-    
+
     # Vault structure
     echo "  Vault structure ready in core/vault/"
     echo "    Copy to your vault: cp -r core/vault/* ~/your-vault/"
-    
+
+    # Behavior layer — briefing template
+    echo "  Behavior layer ready in core/behavior/"
+    echo "    Copy briefing template: cp core/behavior/briefing/TEMPLATE.md ~/your-vault/00-BRIEFING.md"
+    echo "    Edit 00-BRIEFING.md with your agent's identity and rules"
+
     # Automation
     echo "  Automation templates ready in core/automation/"
     echo "    Import via Hermes cron: hermes cron import core/automation/context-snapshot.json"

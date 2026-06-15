@@ -6,9 +6,10 @@ This is the standard vault structure for GenTech-compatible agents.
 
 ```
 your-vault/
-├── 00-HQ/                    # Main coordination
-│   ├── INDEX.md              # Master index
-│   └── decisions.md          # Key decisions log
+├── 00-BRIEFING.md               # Agent identity + behavioral rules (read on restart)
+├── 00-HQ/                       # Main coordination
+│   ├── INDEX.md                 # Master index
+│   └── decisions.md             # Key decisions log
 │
 ├── 01-Agency/                # Agency operations
 │   └── working/              # Active work

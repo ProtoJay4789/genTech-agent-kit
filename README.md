@@ -28,6 +28,9 @@ genTech-agent-kit/
 ├── core/                        # Always installed
 │   ├── brain/                   # Context management
 │   │   └── proactive-context/   # Handoff notes, Mess Hall, memory
+│   ├── behavior/                # Identity + behavioral rules
+│   │   ├── wake-up-protocol/    # Brain refresh on restart
+│   │   └── briefing/            # Agent identity template
 │   ├── vault/                   # Structure
 │   │   ├── Green Room/          # Ideas
 │   │   ├── Mess Hall/           # Thinking space
@@ -97,10 +100,15 @@ cp -r modules/defi/* ~/your-defi/
 
 ## Modules
 
-### 🧠 Brain Layer (Core)
-**Always installed.** The foundation of context management.
+### 🧠 Brain + Behavior Layer (Core)
+**Always installed.** The foundation of context management and agent identity.
 
-**⚠️ IMPORTANT: The brain is the most critical component.** Without it, your agent forgets everything between sessions. The vault is your agent's second brain — ideas, decisions, handoffs, context snapshots.
+**⚠️ IMPORTANT: The brain and behavior layer are the most critical components.** Without them, your agent forgets everything between sessions AND forgets how to behave. The vault is your agent's second brain — ideas, decisions, handoffs, context snapshots.
+
+**The Behavior Layer solves "restart amnesia":**
+- **Wake-Up Protocol** — restores identity, rules, and context on every restart
+- **Briefing File** — human-editable identity card (`00-BRIEFING.md`)
+- Pairs with proactive-context for a complete save/restore lifecycle
 
 **We recommend [Obsidian](https://obsidian.md/) for the vault.** It's free, local-first, and works perfectly with Hermes.
 
@@ -123,6 +131,10 @@ This keeps your agent's brain synced across devices — desktop, mobile, anywher
 - **Mess Hall** (`11-Mess Hall/`) — Thinking space, scratchpad, handoff notes
 - **Archive** (`Archive/`) — Historical content
 - **Daily** (`08-Daily/`) — Daily summaries
+
+**What's in the behavior layer:**
+- **Wake-Up Protocol** — Run on every restart. Reads briefing, working memory, handoff notes.
+- **Briefing File** (`00-BRIEFING.md`) — Who the agent is, who the user is, how to act.
 
 **Why it matters:**
 - Handoff notes preserve context across sessions

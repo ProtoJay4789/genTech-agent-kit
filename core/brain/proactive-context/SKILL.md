@@ -43,10 +43,22 @@ Only show `[🧠 XX%]` when memory is 80-100% full. Don't show it below 80%.
 
 ## Session Start Protocol
 
-1. Read latest Mess Hall file for context
-2. Check `09-Green Room/ideas.md` and `11-Mess Hall/considerations.md`
-3. Search sessions if user references something from before
-4. Don't ask the user to repeat themselves — find it in the vault first
+**This skill handles SAVING context. For RESTORING context on restart, use `wake-up-protocol`.**
+
+**Session Start (after restart):**
+1. Run `wake-up-protocol` skill first (identity + behavior + current state)
+2. Search sessions if user references something from before
+3. Don't ask the user to repeat themselves — find it in the vault first
+
+**During Session (this skill):**
+1. Log ideas to Mess Hall (`11-Mess Hall/`) during brainstorming
+2. Cross-reference — note files, decisions, or threads that might be needed later
+3. Save as skill if a workflow repeats — don't clutter memory with procedures
+
+**Session End:**
+1. Write handoff note to `11-Mess Hall/YYYY-MM-DD-handoff.md`
+2. Log any ideas or insights to Mess Hall
+3. Update memory with new facts or preferences
 
 ## Skill Over Memory
 

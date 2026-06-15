@@ -32,10 +32,17 @@ If you'll do it again, save it as a **skill**. If it's a fact about the user, sa
 
 ## Session Start Protocol
 
-1. Read latest Mess Hall file for context
-2. Check `09-Green Room/ideas.md` and `11-Mess Hall/considerations.md`
-3. Search sessions if user references something from before
-4. Don't ask the user to repeat themselves — find it in the vault first
+**Run the Wake-Up Protocol FIRST:**
+1. Read `00-BRIEFING.md` — identity, rules, collaborators (MANDATORY)
+2. Read `00-Working-Memory.md` — active projects, deadlines, status
+3. Read latest Mess Hall handoff note — what was happening before restart
+4. Check `09-Green Room/ideas.md` if context needed
+
+**Then:**
+5. Search sessions if user references something from before
+6. Don't ask the user to repeat themselves — find it in the vault first
+
+See `core/behavior/wake-up-protocol/SKILL.md` for full protocol.
 
 ## Session End Protocol
 
