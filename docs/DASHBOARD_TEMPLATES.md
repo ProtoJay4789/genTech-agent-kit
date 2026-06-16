@@ -132,6 +132,52 @@
 - Track milestones with progress bar
 - Submission checklist with deadlines
 
+### 6. Hub Dashboard
+**Use when:** A personal landing page for a user/family member with tabs.
+
+**Template:** See `modules/dashboard/hub-template.html`
+
+```json
+{
+  "type": "hub",
+  "sections": [
+    { "type": "header", "title": "Jordan's Hub" },
+    { "type": "tab-nav", "tabs": ["home", "profile", "travel", "chat"] },
+    { "type": "tab-content", "id": "home" },
+    { "type": "tab-content", "id": "profile" },
+    { "type": "tab-content", "id": "travel" },
+    { "type": "tab-content", "id": "chat" }
+  ]
+}
+```
+
+**Rules:**
+- Bottom nav buttons and tab sections must have matching IDs/classes
+- Use a **unique `localStorage` key per hub** (e.g. `jordan-hub-default-tab`, `vanito-hub-default-tab`)
+- Never hardcode live data; fetch from `data.json` or redirect to the live dashboard
+- Verify all internal links after renaming files
+- Use `data-tab` attributes or `id="nav-{{tab}}"` for robust tab selection
+
+**Common bugs to avoid:**
+- JavaScript uses `.tab-section` but HTML uses `.tab-content`
+- JavaScript uses `.nav-btn` but HTML uses `.nav-item`
+- `localStorage` key is shared across hubs, so one user's default breaks another's tabs
+- Links point to renamed/deleted files (e.g. `poe2-warrior-dashboard.html` → `poe2-dashboard.html`)
+- Hub embeds stale hardcoded numbers instead of fetching live data
+
+---
+
+## 🚨 Hub Audit Checklist
+
+Before deploying any hub:
+
+- [ ] Tab switching works on mobile and desktop
+- [ ] Each hub uses a unique `localStorage` default-tab key
+- [ ] All links resolve (no 404s)
+- [ ] Live data is fetched, not hardcoded
+- [ ] "Back to Hub" links work from sub-pages
+- [ ] Settings modal saves and restores the correct tab
+
 ---
 
 ## 🔧 Auto-Refresh Patterns
