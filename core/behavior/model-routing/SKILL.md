@@ -15,15 +15,23 @@ Not every task needs the most expensive model. This skill defines a routing stra
 
 **Core philosophy:** The model is the junior developer. Skills (deploy-and-verify, pre-work-audit, the-workshop) are the senior review. A cheaper model with good process beats an expensive model with no oversight.
 
-## Model Tiers (as of June 2026)
+## Proven Three-Tier Setup (Tested June 2026)
 
-| Tier | Models | Cost | Use For |
-|------|--------|------|---------|
-| **Free** | NVIDIA: Mistral Large 3 675B, Llama 4 Maverick, Qwen3-Next 80B, Nemotron 3 Nano Omni (vision) | $0 | Research, content, documentation, light analysis, vision tasks |
-| **Budget** | DeepSeek V4 ($0.20/M), MiniMax M2.7/M3 ($0.30/M), GLM-5 ($0.60/M) | $0.20–0.60/M | Spec writing, brainstorming, light coding, task decomposition |
-| **Mid** | MiMo-V2.5 (OpenCode Go), Kimi K2.7 (OpenCode Go), Gemini 2.5 Flash ($0.30/M) | Included in sub | Main conversation, coordination, moderate code |
-| **Code** | Kimi K2.7 Code (OpenCode Go), GLM-5.1 ($1.40/M) | $0.95–1.40/M | Deep code audits, smart contract review, architecture |
-| **Premium** | Claude Sonnet/Opus, GPT-5.x, o3 | $2–30/M | Complex reasoning, multi-step planning, critical decisions |
+| Tier | Provider | Models | Cost | Use For |
+|------|----------|--------|------|---------|
+| **Free** | BlockRun (NVIDIA) | Llama 4 Maverick, Mistral Large 3 675B, Nemotron 3 Nano Omni (vision) | $0 | Research synthesis, content, docs, vision. Pair with `web_search` for real data. |
+| **Coding** | Xiaomi / OpenCode Go | MiMo 2.5 Pro (coding), Kimi K2.7 (heavy audits) | Subscription | Main conversation, code tasks, smart contract review |
+| **Data** | BlockRun (tools) | `blockrun_price` (free), `blockrun_defi` (needs ~$5 USDC) | $0–$0.005 | Market data, on-chain fundamentals, DEX pairs |
+
+**Key insight:** Free BlockRun models don't have internet. Always run `web_search` first, then feed results to `blockrun_chat(mode="free")` for synthesis. Real-time research at $0.
+
+**Proven workflow:**
+```
+1. web_search(query)          → free, real data
+2. blockrun_chat(mode="free") → synthesize findings ($0)
+3. blockrun_price(symbol)     → live market data ($0)
+4. blockrun_defi(path)        → on-chain data ($0.005, needs wallet)
+```
 
 ## Routing Rules
 
