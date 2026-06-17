@@ -61,6 +61,60 @@ Status: 🟡 Good — monitor, rebalance if drops below 50%
 
 ---
 
+## 🎯 Shape-Aware Efficiency
+
+Different LP shapes earn fees differently. **The efficiency formula must match the shape.**
+
+### Bid-Ask / Bidirectional (Edge-High):
+Liquidity concentrated at **edges** — fees spike when price is near edges.
+
+```javascript
+// JavaScript
+const distFromCenter = Math.abs(price - rangeMid) / (rangeWidth / 2);
+const efficiency = Math.max(0, Math.min(100, distFromCenter * 100));
+// 100% at edges, 0% at center
+```
+
+```python
+# Python
+efficiency = max(0, min(100, abs(pos - 0.5) * 2 * 100))
+# pos = (price - range_low) / (range_high - range_low)
+```
+
+### Curve / Convergent (Center-High):
+Liquidity concentrated at **center** — fees steady when price is near center.
+
+```javascript
+// JavaScript
+const distFromCenter = Math.abs(price - rangeMid) / (rangeWidth / 2);
+const efficiency = Math.max(0, Math.min(100, (1 - distFromCenter) * 100));
+// 100% at center, 0% at edges
+```
+
+### ⚠️ Common Bug:
+Using the wrong formula inverts the efficiency. A Bid-Ask position at 95% efficiency shows as 5% with the Curve formula.
+
+---
+
+## 🔗 On-Chain Price vs DexScreener
+
+**Use on-chain price for range checks, not DexScreener.**
+
+DexScreener live price can drift 1-3 cents from the on-chain price (active bin). When your position is near the range edge, this drift causes false "Out of Range" alerts.
+
+```javascript
+// WRONG: DexScreener can be 6.93 while on-chain is 6.91
+const inRange = avaxPrice >= rangeLow && avaxPrice <= rangeHigh;
+
+// RIGHT: Use on-chain price from active bin
+const onChainPrice = pos.curveData?.currentPrice || avaxPrice;
+const inRange = onChainPrice >= rangeLow && onChainPrice <= rangeHigh;
+```
+
+**Rule:** DexScreener for live price overlay on dashboard. On-chain for all position logic.
+
+---
+
 ## 🔔 Cron Job Pattern
 
 ### Tier 1: Initial Alert (every 10 min)

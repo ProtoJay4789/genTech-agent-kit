@@ -59,6 +59,7 @@ genTech-agent-kit/
     ├── KNOWN_ISSUES.md      # 🔧 Troubleshooting — check here first when stuck
     ├── DASHBOARD_TEMPLATES.md # 📊 Built-in patterns for common dashboard types
     ├── DEFI_LP_MONITORING_PATTERN.md # 💰 Two-tier alerts + fee efficiency tracking
+    ├── DEPLOY-AND-VERIFY.md  # 🔄 Agent self-verification standard — 7-step deploy cycle
     └── integrations.md
 ```
 

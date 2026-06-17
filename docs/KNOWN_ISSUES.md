@@ -212,12 +212,26 @@
 ### 20. Cron Job Not Delivering
 **Symptom:** Scheduled task runs but message doesn't appear in Telegram.  
 **Cause:** Chat ID wrong, or delivery target misconfigured.  
-**Fix:** 
+**Fix:**
 - Verify chat ID: `send_message(action='list')` to see targets
 - Check cron job config: `cronjob(action='list')`
 - Ensure `deliver` field matches target format: `"telegram:{chat_id}"`  
 **Status:** ✅ Known  
 **Watch for:** After adding new Telegram groups — IDs change.
+
+### 21. Dashboard Shows Stale Data After Position Change
+**Symptom:** Phone dashboard shows old price/range/efficiency even though position changed.  
+**Cause:** Multiple files have hardcoded position values that don't get updated together. The cron script, config file, data JSON, and dashboard HTML all need synchronized updates.  
+**Fix:** Follow the Position Change Checklist in `docs/DEPLOY-AND-VERIFY.md`. All 7 files must be updated:
+1. `defi-lp-config.env` (source of truth)
+2. `defi-master-cron.py` POOL config
+3. `defi-data.json` with new range/shape
+4. Dashboard HTML `fetchLiveData()` hardcoded ranges
+5. Push all copies (repo, vault, portfolio)
+6. Verify live site shows correct data
+7. Verify cron script calculates correctly  
+**Status:** ✅ Fixed (2026-06-16)  
+**Watch for:** Every time Jordan rebalances or changes LP position.
 
 ---
 
