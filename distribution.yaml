@@ -26,27 +26,29 @@ components:
     source: core/vault/
     description: Vault structure template
 
-# Environment variables the recipient must supply
-required_env:
-  - name: BLOCKRUN_API_KEY
-    description: BlockRun API key for x402 payments, search, and AI tools
-    required: true
-  - name: OPENCODE_GO_API_KEY
-    description: OpenCode Go API key for model access (or substitute your own provider)
-    required: true
+# IMPORTANT: This distribution does NOT overwrite your existing config.
+# It adds skills, cron jobs, MCP connections, and vault structure.
+# Your model/provider setup stays exactly as-is.
+#
+# If you WANT to adopt our model defaults, copy config.yaml manually:
+#   cp config.yaml ~/.hermes/config.yaml
+#
+# Or cherry-pick sections from config.yaml into your existing config.
 
+# Environment variables for MCP connections (optional)
 optional_env:
+  - name: BLOCKRUN_API_KEY
+    description: BlockRun API key for x402 payments and AI tools
+    required: false
+  - name: WURK_API_KEY
+    description: WURK.fun API key for agent-to-human microtasks
+    required: false
   - name: ELEVENLABS_API_KEY
     description: ElevenLabs TTS for voice output
+    required: false
   - name: GITHUB_TOKEN
     description: GitHub PAT for repo access and portfolio sync
+    required: false
 
 # Compatible Hermes version
 min_hermes_version: "0.13.0"
-
-# Default model config (recipient can override)
-default_model:
-  provider: custom
-  model: mimo-v2.5
-  base_url: https://token-plan-sgp.xiaomimimo.com/v1
-  # api_key: set via OPENCODE_GO_API_KEY or your provider's env var

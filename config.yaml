@@ -1,30 +1,52 @@
-# GenTech Agent — Default Config
-# Customize for your provider and preferences
+# GenTech Agent — Config Template
+#
+# This is a REFERENCE config showing our defaults.
+# The Hermes installer will NOT overwrite your existing config.yaml.
+# It merges distribution files into your setup.
+#
+# To adopt our model defaults, uncomment sections below.
+# To keep your own model setup, leave this file as-is.
 
-model:
-  default: mimo-v2.5
-  provider: custom
-  # Set your API key in .env as the provider's env var
-  # Or set model.api_key directly here (not recommended for shared configs)
-
-custom_providers:
-  - name: xiaomi
-    base_url: https://token-plan-sgp.xiaomimimo.com/v1
-    model: mimo-v2.5
-    api_key: ${XIAOMI_API_KEY}
-
-# Alternative provider: OpenCode Go
-# Uncomment and comment out the custom_providers block above
-# providers:
-#   opencode-go:
-#     default_model: qwen3.6-plus
-#     discover_models: false
-#     models: [qwen3.6-plus]
-#     name: OpenCode Go
-#     transport: openai_chat
+# ─── MODEL (uncomment to adopt our defaults) ───────────────────────
+# We use Xiaomi MiMo via custom provider, but use whatever works for you.
+#
 # model:
-#   default: qwen3.6-plus
-#   provider: opencode-go
+#   default: mimo-v2.5
+#   provider: custom
+#
+# custom_providers:
+#   - name: xiaomi
+#     base_url: https://token-plan-sgp.xiaomimimo.com/v1
+#     model: mimo-v2.5
+#     api_key: ${XIAOMI_API_KEY}
+
+# ─── ALTERNATIVE PROVIDERS ─────────────────────────────────────────
+# Pick what matches your setup. Common options:
+#
+# Local (Ollama, LM Studio, llama.cpp):
+#   model:
+#     default: llama3.1
+#     provider: custom
+#     base_url: http://localhost:11434/v1
+#     api_key: ollama
+#
+# OpenCode Go (cloud, $10/mo):
+#   model:
+#     default: qwen3.6-plus
+#     provider: opencode-go
+#
+# Anthropic:
+#   model:
+#     default: claude-sonnet-4
+#     provider: anthropic
+#
+# OpenRouter (multi-model):
+#   model:
+#     default: anthropic/claude-sonnet-4
+#     provider: openrouter
+
+# ─── AGENT BEHAVIOR ────────────────────────────────────────────────
+# These settings work regardless of your model provider.
 
 agent:
   max_turns: 90
@@ -32,26 +54,23 @@ agent:
   task_completion_guidance: true
   parallel_tool_call_guidance: true
 
-# Voice (optional — uncomment if using TTS)
-# tts:
-#   provider: edge  # free, no key needed
-#   voice: en-US-AndrewNeural
-# stt:
-#   enabled: true
-#   provider: local
-
-# Security
+# ─── SECURITY ──────────────────────────────────────────────────────
 approvals:
-  mode: manual  # or 'smart' for auto-approve low-risk commands
+  mode: manual  # 'smart' for auto-approve low-risk, 'off' to skip all
 
-# Compression
+# ─── COMPRESSION ───────────────────────────────────────────────────
 compression:
   enabled: true
   threshold: 0.50
   target_ratio: 0.20
 
-# Gateway (if running as a service)
-# gateway:
-#   platforms:
-#     - type: telegram
-#       token: ${TELEGRAM_BOT_TOKEN}
+# ─── VOICE (optional) ─────────────────────────────────────────────
+# Uncomment if you want voice output. Edge TTS is free, no key needed.
+#
+# tts:
+#   provider: edge
+#   voice: en-US-AndrewNeural
+#
+# stt:
+#   enabled: true
+#   provider: local

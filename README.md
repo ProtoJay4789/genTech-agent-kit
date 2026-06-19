@@ -12,22 +12,29 @@
 hermes install --from github.com/ProtoJay4789/genTech-agent-kit
 ```
 
-This installs:
+This installs **alongside your existing setup** — it does NOT overwrite your model config:
+
 - ✅ Core skills (wake-up, context, DeFi ops, research)
-- ✅ Default config with Xiaomi MiMo model
 - ✅ MCP connections (BlockRun, WURK, Pay)
 - ✅ 3 starter cron jobs (morning digest, brain backup, skill audit)
 - ✅ Vault structure template
+- ✅ Config template (optional — your model setup stays as-is)
 
-**After install, set your API keys:**
+**What you keep:** Your model, provider, API keys, existing config
+**What we add:** Agent skills, automation, integrations, vault structure
+
+**Optional: Adopt our model defaults**
 ```bash
-# Required
-export BLOCKRUN_API_KEY="your-key"
-export XIAOMI_API_KEY="your-key"
+# Only if you want to use Xiaomi MiMo like we do
+cp config.yaml ~/.hermes/config.yaml
+# Then set: export XIAOMI_API_KEY="your..."
+```
 
-# Optional
-export ELEVENLABS_API_KEY="your-key"
-export GITHUB_TOKEN="your-token"
+**Optional: Enable MCP connections**
+```bash
+# Only if you want BlockRun/WURK/Pay integrations
+export BLOCKRUN_API_KEY="your..."
+export WURK_API_KEY="your..."
 ```
 
 ---
@@ -98,6 +105,14 @@ genTech-agent-kit/
 
 ## Customization
 
+### Your Model Setup Stays As-Is
+The distribution does NOT touch your model config. Use whatever you want:
+- Local models (Ollama, LM Studio, llama.cpp)
+- Cloud providers (Anthropic, OpenAI, OpenRouter)
+- Custom endpoints (Xiaomi, Kimi, DeepSeek)
+
+We just add the agent layer on top.
+
 ### Change the Personality
 Edit `SOUL.md` — this is your agent's identity. Fill in:
 - Your name and context
@@ -105,24 +120,12 @@ Edit `SOUL.md` — this is your agent's identity. Fill in:
 - Communication preferences
 - Behavioral rules
 
-### Change the Model
-Edit `config.yaml` — swap providers:
-```yaml
-# Option 1: Xiaomi MiMo (default)
-model:
-  default: mimo-v2.5
-  provider: custom
+### Adopt Our Defaults (Optional)
+If you want to use our model setup:
+```bash
+cp config.yaml ~/.hermes/config.yaml
+# Set your API key: export XIAOMI_API_KEY="your..."
 
-# Option 2: OpenCode Go
-model:
-  default: qwen3.6-plus
-  provider: opencode-go
-
-# Option 3: Anthropic
-model:
-  default: claude-sonnet-4
-  provider: anthropic
-```
 
 ### Add More Skills
 ```bash
