@@ -1,0 +1,23 @@
+{
+  "jobs": [
+    {
+      "name": "Morning Digest — Vault + System Health",
+      "prompt": "You are Gentech running the morning digest.\n\n## 1. Mess Hall Review\nRead `11-Mess Hall/considerations.md` — list any items that need decisions.\n\n## 2. Green Room Check\nRead `09-Green Room/ideas.md` — count pending vs completed ideas.\n\n## 3. System Health\n- Check disk usage: `df -h /`\n- Check if any background processes need attention\n- Report any issues found\n\n## 4. Daily Summary\nProduce a clean, scannable digest:\n- 🟢 System healthy\n- 🟡 Needs attention (list items)\n- 🔴 Critical (list items)\n\nKeep it concise — 5-8 lines max.",
+      "schedule": "0 9 * * *",
+      "deliver": "local",
+      "skills": ["obsidian", "proactive-context"]
+    },
+    {
+      "name": "Brain Backup → GitHub",
+      "prompt": "Run the brain backup script:\n\n```bash\ncd /root/vaults/gentech && git add -A && git commit -m \"Auto-backup $(date +%Y-%m-%d)\" && git push origin main\n```\n\nIf push fails, report the error. If successful, confirm with file count.",
+      "schedule": "0 22 * * *",
+      "deliver": "local"
+    },
+    {
+      "name": "Weekly Skill Audit",
+      "prompt": "Audit installed skills against the distribution manifest.\n\n1. Run `hermes skills list` to get current skills\n2. Check for any skills that need updates: `hermes skills check`\n3. Report:\n   - Total installed skills\n   - Any available updates\n   - Any missing critical skills (wake-up, context, DeFi ops)\n\nKeep it brief — just the numbers and action items.",
+      "schedule": "0 12 * * 1",
+      "deliver": "local"
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+# GenTech Agent — Hermes Distribution
+# Install: hermes install --from github.com/ProtoJay4789/genTech-agent-kit
+
+name: gentech
+version: 0.1.0
+description: >
+  The GenTech agent — DeFi operations, portfolio tracking, opportunity scanning,
+  and autonomous research. AAE-compatible agent standard with identity, enforcement,
+  and audit baked in.
+author: GenTech Labs
+license: MIT
+homepage: https://github.com/ProtoJay4789/genTech-agent-kit
+
+# What this distribution installs
+components:
+  - type: skills
+    source: skills/
+    description: Core agent skills (wake-up, context, DeFi, research)
+  - type: cron
+    source: cron/
+    description: Scheduled tasks (portfolio health, opportunity scanning)
+  - type: mcp
+    source: mcp.json
+    description: MCP server connections (BlockRun, WURK, Pay)
+  - type: vault
+    source: core/vault/
+    description: Vault structure template
+
+# Environment variables the recipient must supply
+required_env:
+  - name: BLOCKRUN_API_KEY
+    description: BlockRun API key for x402 payments, search, and AI tools
+    required: true
+  - name: OPENCODE_GO_API_KEY
+    description: OpenCode Go API key for model access (or substitute your own provider)
+    required: true
+
+optional_env:
+  - name: ELEVENLABS_API_KEY
+    description: ElevenLabs TTS for voice output
+  - name: GITHUB_TOKEN
+    description: GitHub PAT for repo access and portfolio sync
+
+# Compatible Hermes version
+min_hermes_version: "0.13.0"
+
+# Default model config (recipient can override)
+default_model:
+  provider: custom
+  model: mimo-v2.5
+  base_url: https://token-plan-sgp.xiaomimimo.com/v1
+  # api_key: set via OPENCODE_GO_API_KEY or your provider's env var

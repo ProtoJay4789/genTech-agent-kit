@@ -1,0 +1,25 @@
+{
+  "mcpServers": {
+    "blockrun": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/blockrun-mcp"],
+      "env": {
+        "BLOCKRUN_API_KEY": "${BLOCKRUN_API_KEY}"
+      },
+      "description": "BlockRun x402 payments, AI tools, search, DeFi data"
+    },
+    "wurk": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/wurk-mcp"],
+      "env": {
+        "WURK_API_KEY": "${WURK_API_KEY}"
+      },
+      "description": "WURK.fun agent-to-human microtasks and growth services"
+    },
+    "pay": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/pay-mcp"],
+      "description": "Pay gateway — 402 payment handling, x402/MPP credentials"
+    }
+  }
+}

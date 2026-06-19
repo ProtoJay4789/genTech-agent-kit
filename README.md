@@ -6,6 +6,32 @@
 
 ---
 
+## Quick Install (Hermes Distribution)
+
+```bash
+hermes install --from github.com/ProtoJay4789/genTech-agent-kit
+```
+
+This installs:
+- ✅ Core skills (wake-up, context, DeFi ops, research)
+- ✅ Default config with Xiaomi MiMo model
+- ✅ MCP connections (BlockRun, WURK, Pay)
+- ✅ 3 starter cron jobs (morning digest, brain backup, skill audit)
+- ✅ Vault structure template
+
+**After install, set your API keys:**
+```bash
+# Required
+export BLOCKRUN_API_KEY="your-key"
+export XIAOMI_API_KEY="your-key"
+
+# Optional
+export ELEVENLABS_API_KEY="your-key"
+export GITHUB_TOKEN="your-token"
+```
+
+---
+
 ## Why This Exists
 
 Building an AI agent that works in the agent economy requires:
@@ -24,288 +50,168 @@ Integrating these separately takes **weeks**. GenTech Agent Kit bakes them toget
 
 ```
 genTech-agent-kit/
-│
+├── distribution.yaml    # Hermes distribution manifest
+├── SOUL.md              # Agent personality (customize this)
+├── config.yaml          # Model/provider defaults
+├── mcp.json             # MCP server connections
+├── cron/                # Starter cron jobs
+│   └── defaults.json
 ├── core/                        # Always installed
 │   ├── brain/                   # Context management
 │   │   └── proactive-context/   # Handoff notes, Mess Hall, memory
 │   ├── behavior/                # Identity + behavioral rules
 │   │   ├── wake-up-protocol/    # Brain refresh on restart
-│   │   └── briefing/            # Agent identity template
+│   │   ├── briefing/            # Agent identity template
+│   │   └── model-routing/       # Cost-optimized model selection
 │   ├── vault/                   # Structure
-│   │   ├── Green Room/          # Ideas
-│   │   ├── Mess Hall/           # Thinking space
-│   │   └── Archive/             # History
+│   │   └── vault-structure/     # Standard vault layout
 │   └── automation/              # Cron jobs
+│       ├── the-workshop/        # Daily autonomous work
 │       └── context-snapshot.json
-│
 ├── modules/                     # Pick and choose
 │   ├── dashboard/               # Presentation layer
 │   │   ├── dashboard-engine.js  # 38KB, zero deps
 │   │   └── examples/
-│   ├── defi/                    # LP tracking, yield scouting
-│   ├── payments/                # x402, Circle
-│   ├── identity/                # ERC-8004, wallet binding
-│   ├── audit/                   # Transaction logging
-│   └── protocols/               # Travala, WURK, COTI
-│
-├── chains/                      # Chain-specific
-│   ├── avalanche/
-│   ├── ethereum/
-│   ├── base/
-│   └── solana/
-│
-└── docs/
-    ├── memory-rules.md
-    ├── KNOWN_ISSUES.md      # 🔧 Troubleshooting — check here first when stuck
-    ├── DASHBOARD_TEMPLATES.md # 📊 Built-in patterns for common dashboard types
-    ├── DEFI_LP_MONITORING_PATTERN.md # 💰 Two-tier alerts + fee efficiency tracking
-    ├── DEPLOY-AND-VERIFY.md  # 🔄 Agent self-verification standard — 7-step deploy cycle
-    └── integrations.md
+│   └── protocols/               # Integrations
+├── skills/                      # Bundled skills
+├── docs/                        # Documentation
+└── install.sh                   # Legacy installer (still works)
 ```
 
 ---
 
-## Quick Start
+## What Makes This Different
 
-### Option 1: Full Stack (Recommended)
-```bash
-git clone https://github.com/ProtoJay4789/genTech-agent-kit.git
-cd genTech-agent-kit
-./install.sh --all
+### vs. Building from Scratch
+- **2-minute setup** vs. days of configuration
+- **Battle-tested skills** — wake-up protocol, context management, DeFi ops
+- **Pre-wired MCP** — BlockRun, WURK, Pay ready to go
+- **Starter cron jobs** — morning digest, backups, audits
+
+### vs. Other Agent Frameworks
+- **AAE-compatible** — ERC-8004 identity, x402 payments, audit trails
+- **Vault-first memory** — Obsidian-compatible knowledge base
+- **Topic routing** — organize conversations by subject
+- **Agent economy ready** — not just chat, but commerce
+
+---
+
+## Customization
+
+### Change the Personality
+Edit `SOUL.md` — this is your agent's identity. Fill in:
+- Your name and context
+- Collaborator names
+- Communication preferences
+- Behavioral rules
+
+### Change the Model
+Edit `config.yaml` — swap providers:
+```yaml
+# Option 1: Xiaomi MiMo (default)
+model:
+  default: mimo-v2.5
+  provider: custom
+
+# Option 2: OpenCode Go
+model:
+  default: qwen3.6-plus
+  provider: opencode-go
+
+# Option 3: Anthropic
+model:
+  default: claude-sonnet-4
+  provider: anthropic
 ```
 
-### Option 2: Pick and Choose
+### Add More Skills
 ```bash
-# Core only (brain + vault + automation)
-./install.sh --core
+# From the hub
+hermes skills install <skill-id>
 
-# Add DeFi module
-./install.sh --module defi
-
-# Add Avalanche chain
-./install.sh --chain avalanche
+# From a URL
+hermes skills install https://example.com/SKILL.md --name my-skill
 ```
 
-### Option 3: Manual
+### Add More Cron Jobs
 ```bash
-# Copy core to your Hermes profile
-cp -r core/brain/* ~/.hermes/profiles/your-profile/skills/
-cp -r core/vault/* ~/your-vault/
-
-# Copy modules you want
-cp -r modules/dashboard/* ~/your-dashboard/
-cp -r modules/defi/* ~/your-defi/
+hermes cron create "every 6h" --prompt "Check portfolio positions" --name "Portfolio Check"
 ```
 
 ---
 
 ## Modules
 
-### 🧠 Brain + Behavior Layer (Core)
-**Always installed.** The foundation of context management and agent identity.
+### Core (Always Installed)
+- **Wake-Up Protocol** — restores identity after restart
+- **Proactive Context** — handoff notes, memory management
+- **Model Routing** — cost-optimized model selection
+- **The Workshop** — daily autonomous work prompt
 
-**⚠️ IMPORTANT: The brain and behavior layer are the most critical components.** Without them, your agent forgets everything between sessions AND forgets how to behave. The vault is your agent's second brain — ideas, decisions, handoffs, context snapshots.
+### Dashboard Module
+- **Dashboard Engine** — 38KB, zero dependencies
+- **Hub Template** — project showcase
+- **DeFi Dashboard** — portfolio tracking
 
-**The Behavior Layer solves "restart amnesia":**
-- **Wake-Up Protocol** — restores identity, rules, and context on every restart
-- **Briefing File** — human-editable identity card (`00-BRIEFING.md`)
-- Pairs with proactive-context for a complete save/restore lifecycle
+### Protocol Module
+- **x402** — micropayments
+- **Circle** — USDC payments
+- **WURK.fun** — microtasks
+- **DexScreener** — live prices
+- **DeFiLlama** — protocol data
 
-**We recommend [Obsidian](https://obsidian.md/) for the vault.** It's free, local-first, and works perfectly with Hermes.
+---
 
-**Install Obsidian CLI (ob) for constant sync:**
+## For Collaborators
+
+### What You Get
+- A working AI agent with DeFi capabilities
+- Pre-configured tools and integrations
+- Starter automation (cron jobs)
+- Clear structure for customization
+
+### What You Need
+- A Hermes installation (`curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash`)
+- API keys for your chosen model provider
+- Optional: BlockRun account for x402 payments
+
+### Getting Started
+1. Install the distribution
+2. Set your API keys in `.env`
+3. Edit `SOUL.md` with your identity
+4. Run `hermes` and start building
+
+---
+
+## Development
+
+### Local Development
 ```bash
-npm install -g obsidian-cli
-ob sync  # Syncs vault to Obsidian desktop/mobile
+git clone https://github.com/ProtoJay4789/genTech-agent-kit
+cd genTech-agent-kit
+./install.sh --all
 ```
 
-**Set up automatic sync:**
-```bash
-# Add to your cron jobs
-0 */6 * * * cd ~/vaults/your-vault && ob sync
-```
+### Adding Skills
+1. Create `skills/my-skill/SKILL.md` with YAML frontmatter
+2. Test locally with `hermes -s my-skill`
+3. Push to repo — auto-included in distribution
 
-This keeps your agent's brain synced across devices — desktop, mobile, anywhere you need it.
-
-**What's in the brain:**
-- **Green Room** (`09-Green Room/`) — Ideas and brainstorming
-- **Mess Hall** (`11-Mess Hall/`) — Thinking space, scratchpad, handoff notes
-- **Archive** (`Archive/`) — Historical content
-- **Daily** (`08-Daily/`) — Daily summaries
-
-**What's in the behavior layer:**
-- **Wake-Up Protocol** — Run on every restart. Reads briefing, working memory, handoff notes.
-- **Briefing File** (`00-BRIEFING.md`) — Who the agent is, who the user is, how to act.
-
-**Why it matters:**
-- Handoff notes preserve context across sessions
-- Mess Hall captures ideas mid-conversation
-- Context snapshots auto-save every 6 hours
-- Your agent never loses important information
-
-**First time setup:**
-```bash
-# Create your vault
-mkdir -p ~/vaults/your-vault/{09-Green\ Room,11-Mess\ Hall,Archive,08-Daily}
-
-# Install Obsidian CLI
-npm install -g obsidian-cli
-
-# Initialize sync
-cd ~/vaults/your-vault && ob init
-```
-
-### 📊 Dashboard Module
-**Presentation layer.** 38KB, zero dependencies.
-
-- 8 section types (stats, table, progress, checklist, grid, cards, timeline, custom)
-- 7 field formats (money, percent, badge, date, number, tags, text)
-- 5 themes (Default, Avalanche, Ethereum, Solana, Fire)
-- Auto-refresh with live data
-- Mobile-first responsive
-
-### 💰 DeFi Module
-**Portfolio intelligence.** Track positions, scout yields, climb milestones.
-
-- LP position tracking
-- Yield scout fleet
-- Fee milestone progression
-- Live price feeds (DexScreener)
-- Range status monitoring
-
-### 🔐 Identity Module
-**Who is this agent?** Wallet binding, user verification.
-
-- ERC-8004 trustless agents
-- Wallet binding (EVM, Solana, Base)
-- Persona isolation
-- Multi-chain identity resolution
-
-### ⚡ Enforcement Module
-**Make it happen.** Payments, execution, automation.
-
-- x402 micropayments (Circle)
-- Auto-execution engine
-- Multi-sig support
-- Protocol integration
-
-### 📋 Audit Module
-**Prove it.** Transaction logging, compliance.
-
-- Transaction logging with receipts
-- Proof of execution on-chain
-- Dashboard visualization
-- Automated compliance reporting
-
-### 🔗 Protocols Module
-**Connect to everything.** Pre-built integrations.
-
-- Travala (travel booking)
-- WURK.fun (microtasks)
-- COTI (privacy transactions)
-- More added regularly
-
----
-
-## Chains
-
-| Chain | Status | Protocols |
-|-------|--------|-----------|
-| **Avalanche** | ✅ Live | LFJ, Pangolin, Benqi |
-| **Ethereum** | ✅ Live | Uniswap, Aave, Lido |
-| **Base** | ✅ Live | Uniswap, Aerodrome |
-| **Solana** | 🔄 Coming | Raydium, Orca, Jito |
-
-**Each chain gets the GenTech spin:**
-- Native protocol integrations
-- Optimized gas strategies
-- Chain-specific yield opportunities
-- Local compliance handling
-
----
-
-## The Three Pillars
-
-### 🔐 Identity
-> "Agents need to know who they're paying on behalf of."
-
-- Wallet binding (EVM, Solana, Base)
-- User verification (ERC-8004 trustless agents)
-- Persona isolation (per-user dashboards and data)
-- Multi-chain identity resolution
-
-### ⚡ Enforcement
-> "Agents need to be enforced to make the transaction."
-
-- x402 payment rails (Circle, USDC)
-- Auto-execution with configurable thresholds
-- Multi-sig for high-value transactions
-- Protocol-native integration (Travala, WURK, LFJ)
-
-### 📋 Audit
-> "Agents need to be audited to make sure the transaction went through."
-
-- Transaction logging with receipts
-- Proof of execution on-chain
-- Dashboard visualization of all activity
-- Automated compliance reporting
-
----
-
-## Contributing
-
-### 🐛 Found a Bug?
-Check **[KNOWN_ISSUES.md](docs/KNOWN_ISSUES.md)** first — we track every bug, gotcha, and workaround we find.
-
-If it's not listed:
-1. Open an issue with symptoms + steps to reproduce
-2. We'll add it to KNOWN_ISSUES.md with a fix
-3. Your report helps everyone who hits the same wall
-
-### For Developers
-1. Fork the repo
-2. Add your module or chain integration
-3. Submit a PR with tests
-4. Get merged, ship it
-
-### For Protocol Teams
-1. Open an issue with your protocol details
-2. We'll add native integration
-3. Your protocol gets GenTech Agent support
-
-### For Community
-1. Share your use cases
-2. Request new chains/protocols
-3. Report bugs, suggest features
-
----
-
-## Roadmap
-
-### Q3 2026
-- [ ] Solana full integration
-- [ ] BNB Chain support
-- [ ] Multi-agent coordination
-- [ ] Advanced audit dashboard
-
-### Q4 2026
-- [ ] Mobile agent app
-- [ ] Voice command interface
-- [ ] Cross-chain atomic swaps
-- [ ] Institutional compliance module
-
-### 2027
-- [ ] AI agent marketplace
-- [ ] Agent-to-agent payments
-- [ ] Regulatory framework integration
-- [ ] Enterprise deployment tools
+### Adding Cron Jobs
+1. Add job definition to `cron/defaults.json`
+2. Test with `hermes cron create` using the same prompt
+3. Push to repo — auto-included in distribution
 
 ---
 
 ## License
 
-MIT — use it for anything. Built by GenTech Labs for the agent economy.
+MIT — use it, fork it, sell it.
 
 ---
 
-**Built with ❤️ by [GenTech Labs](https://github.com/ProtoJay4789)** — Tough love for the agent economy.
+## Credits
+
+Built by [GenTech Labs](https://github.com/ProtoJay4789) on top of [Hermes Agent](https://github.com/NousResearch/hermes-agent) by [Nous Research](https://nousresearch.com).
+
+> "Tough love for the agent economy."

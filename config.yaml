@@ -1,0 +1,57 @@
+# GenTech Agent — Default Config
+# Customize for your provider and preferences
+
+model:
+  default: mimo-v2.5
+  provider: custom
+  # Set your API key in .env as the provider's env var
+  # Or set model.api_key directly here (not recommended for shared configs)
+
+custom_providers:
+  - name: xiaomi
+    base_url: https://token-plan-sgp.xiaomimimo.com/v1
+    model: mimo-v2.5
+    api_key: ${XIAOMI_API_KEY}
+
+# Alternative provider: OpenCode Go
+# Uncomment and comment out the custom_providers block above
+# providers:
+#   opencode-go:
+#     default_model: qwen3.6-plus
+#     discover_models: false
+#     models: [qwen3.6-plus]
+#     name: OpenCode Go
+#     transport: openai_chat
+# model:
+#   default: qwen3.6-plus
+#   provider: opencode-go
+
+agent:
+  max_turns: 90
+  tool_use_enforcement: auto
+  task_completion_guidance: true
+  parallel_tool_call_guidance: true
+
+# Voice (optional — uncomment if using TTS)
+# tts:
+#   provider: edge  # free, no key needed
+#   voice: en-US-AndrewNeural
+# stt:
+#   enabled: true
+#   provider: local
+
+# Security
+approvals:
+  mode: manual  # or 'smart' for auto-approve low-risk commands
+
+# Compression
+compression:
+  enabled: true
+  threshold: 0.50
+  target_ratio: 0.20
+
+# Gateway (if running as a service)
+# gateway:
+#   platforms:
+#     - type: telegram
+#       token: ${TELEGRAM_BOT_TOKEN}
