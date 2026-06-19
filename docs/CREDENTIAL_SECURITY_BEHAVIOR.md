@@ -94,6 +94,62 @@ Use git credential helper or OS keyring:
 
 ---
 
+## PAT Type Comparison: Classic vs Fine-Grained
+
+### Classic PAT (Recommended for Agents)
+
+**Scope:** `repo` (full repository access)
+
+**Pros:**
+- Works for ALL git operations (clone, push, pull, fetch)
+- Works with `gh` CLI out of the box
+- Works with git credential helper (`store`)
+- Single token handles API + git auth
+- No per-repo configuration needed
+- Tokens are 40 chars (`ghp_...`)
+
+**Cons:**
+- Broad access (can't restrict to specific repos)
+- No expiration control (can set to never expire)
+- Less audit granularity
+
+**Best for:** Agent automation, cron jobs, scripts, multi-repo operations
+
+### Fine-Grained PAT
+
+**Scope:** Per-repository, per-permission
+
+**Pros:**
+- Granular permissions (Contents: Read, Contents: Write, etc.)
+- Can restrict to specific repositories
+- Expiration dates enforced
+- Better audit trail
+
+**Cons:**
+- Requires explicit `Contents: Write` permission for git push
+- `gh` CLI may not recognize it without explicit auth
+- Git credential helper may not work if scopes are incomplete
+- Tokens are 93 chars (`github_pat_...`)
+- Requires per-repo authorization in token settings
+
+**Best for:** Human use, specific repo access, compliance requirements
+
+### Recommendation
+
+For agent automation and Agent Kit builds:
+
+```bash
+# Use classic PAT with repo scope
+ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+# NOT fine-grained unless you need per-repo restrictions
+github_pat_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+**Why:** Agents need reliable, broad access. Fine-grained tokens require manual repo authorization and can fail silently when scopes are missing. Classic PATs with `repo` scope "just work" for all operations.
+
+---
+
 ## Configuration Reference
 
 ### Disable Secret Redaction (NOT Recommended)
@@ -124,6 +180,8 @@ Uses an auxiliary LLM to auto-approve low-risk commands, prompt on high-risk.
 4. **Document the behavior** — Users will think the agent is broken when output shows `***`
 5. **Layer 2 (approval) is the most disruptive** — It blocks execution entirely, not just display
 6. **Indirect verification is key** — File existence checks, byte counts, and hash comparisons all work
+7. **Classic PATs are more reliable than fine-grained for agents** — Broader scope = fewer auth failures
+8. **Check git remote URLs for embedded tokens** — Old tokens in URLs override credential helper
 
 ---
 
