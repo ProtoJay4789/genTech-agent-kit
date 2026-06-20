@@ -155,6 +155,7 @@ hermes cron create "every 6h" --prompt "Check portfolio positions" --name "Portf
 - **Dashboard Engine** — 38KB, zero dependencies
 - **Hub Template** — project showcase
 - **DeFi Dashboard** — portfolio tracking
+- **Hub Sync Protocol** — Vault ↔ Hub ↔ Agent Kit bidirectional sync (see `docs/HUB_SYNC_PROTOCOL.md`)
 
 ### Protocol Module
 - **x402** — micropayments
@@ -172,6 +173,7 @@ hermes cron create "every 6h" --prompt "Check portfolio positions" --name "Portf
 - Pre-configured tools and integrations
 - Starter automation (cron jobs)
 - Clear structure for customization
+- **Your own Hub space** — profile, dashboards, agent access (see `docs/HUB_SYNC_PROTOCOL.md`)
 
 ### What You Need
 - A Hermes installation (`curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash`)
