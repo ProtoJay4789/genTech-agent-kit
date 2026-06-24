@@ -220,6 +220,14 @@ GenTech Agent
 
 ---
 
+## Troubleshooting
+
+### Gateway Configuration Errors
+
+If your gateway crash-loops with `TypeError: string indices must be integers, not 'str'`, check the `home_channel` configuration format. See [docs/hermes-gateway-troubleshooting.md](docs/hermes-gateway-troubleshooting.md) for details.
+
+---
+
 ## Contributing
 
 We welcome contributions! Here's how:
